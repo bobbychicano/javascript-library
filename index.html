@@ -14,9 +14,29 @@
     <p>Fill out our form below to add it to your "Book Library".</p>
 
     <div class="form-container">
-      <form action="">
-        <legend>New Book Input</legend>
-        <input type="text">
+      <form action="#" method="post">
+        <fieldset>
+          <legend>Add A Book</legend>
+          <div class="form-item">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title">
+          </div>
+          <div class="form-item">
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author">
+          </div>
+          <div class="form-item">
+            <label for="pages">Pages:</label>
+            <input type="text" id="pages" name="pages">
+          </div>
+          <div class="form-item">
+            <label for="read">Have you read it?</label>
+            <select name="read" id="read">
+              <option value="have-read">Have read</option>
+              <option value="not-read">Not read</option>
+            </select>
+          </div>
+        </fieldset>
       </form>
     </div>
 
