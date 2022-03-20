@@ -22,7 +22,10 @@ function saveInput() {
   // the newBookVariable is where we save our new Book object after a user inputs arguments
   books.push(newBookVariable);
 
-  //take the input value and store it in the corresponding fields 
+  // make a variable that holds the value of the input element. You have to use a query selector to target it
+  // and then a click function when the user submits to get the input and then clear it.
+
+
 
 }
 
