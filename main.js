@@ -1,5 +1,9 @@
 // need to make query selectors to target the form input fields and they should be placed in global scope
-
+const bookTitle = document.querySelector('input#title');
+const bookAuthor = document.querySelector('input#author');
+const bookPages = document.querySelector('input#pages');
+const bookRead = document.querySelector('select#read');
+const submitButton = document.querySelector('.submit-button button');
 
 
 let books = [];
@@ -13,9 +17,7 @@ function Book(title, author, pages, read){
   this.read = read;
 }
 
-Book.prototype.readStatus() {
-
-};
+//Book.prototype.readStatus();
 
 function saveInput() {
   // save user input AS AN OBJECT, probably from a form, and add it into the book array
@@ -50,8 +52,8 @@ function displayArray(booksArray) {
 
       //add a button element to the card to remove the book from the library
       //add a buttom element to the card to change the books 'read' status
-  }
-})
+  })
+}
 
 function removeCard() {
   //event listener to know if the button in the card was toggled
