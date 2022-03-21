@@ -1,38 +1,54 @@
-// need to make query selectors to target the form input fields and they should be placed in global scope
-const bookTitle = document.querySelector('input#title');
-const bookAuthor = document.querySelector('input#author');
-const bookPages = document.querySelector('input#pages');
-const bookRead = document.querySelector('select#read');
+const titleInput = document.querySelector('input#title');
+const authorInput = document.querySelector('input#author');
+const pagesInput = document.querySelector('input#pages');
+const readInput = document.querySelector('select#read');
 const submitButton = document.querySelector('.submit-button button');
 
+// there may be a way to shorten my code by using querySelectorAll
 
 let books = [];
 
 // when someon submits the form with the inputs that correspond the parameters below
 // the constructor needs to run in order to make a new Book object
-function Book(title, author, pages, read){
+function Book(title, author, pages, read) {
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.read = read;
-}
+} // remember that this returns an object
 
 //Book.prototype.readStatus();
 
+// Submit button event listener
+submitButton.addEventListener("click", saveInput);
+
 function saveInput() {
-  // save user input AS AN OBJECT, probably from a form, and add it into the book array
-  // the newBookVariable is where we save our new Book object after a user inputs arguments
-  books.push(newBookVariable);
+  // 1. When a user clicks on the submit button, this function will run and save only valid input fields that have text.
+  // 2. Then take the values in the input fields and save them to variables.
+  // 3. Run the constructor function.
+  // 4. Push the new book to the book array.
+  // 5. Clear the input fields of text.
 
-  // make a variable that holds the value of the input element. You have to use a query selector to target it
-  // and then a click function when the user submits to get the input and then clear it.
+  let bookTitle = titleInput.value;
+  let bookAuthor = authorInput.value;
+  let bookPages = pagesInput.value;
+  let bookRead = readInput.value;
 
+  let newBook = Book(bookTitle, bookAuthor, bookPages, bookRead);
 
+  books.push(newBook);
+
+  titleInput.value = '';
+  authorInput.value = '';
+  pagesInput.value = '';
+  readInput.value = '';
 
 }
 
+
 // function that loops through the array and displays each book on the homepage
 // might I need to use a standard 'for' loop? the forEach() loop does NOT return a value
+// if i have a nodelist, convert it to an array first
 function displayArray(booksArray) {
   booksArray.forEach((element) => {
     //create a new card
