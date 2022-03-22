@@ -7,12 +7,14 @@ const submitButton = document.querySelector('button');
 const books = [];
 const booksDisplay = document.querySelector('.books-display');
 
-// add some books to my array to help with styling
+// Placeholder content: add some books to my array to help with styling
 
 let book1 = {title: 'East of Eden', author: 'John Steinbeck', pages: '521', read: 'have-read'};
 let book2 = {title: 'Silas Lapham', author: 'Howard', pages: '439', read: 'have-read'};
 books.push(book1, book2)
 displayBooks(books);
+
+//end of placeholder content
 
 // Constructor
 function Book(title, author, pages, read) {
@@ -25,7 +27,7 @@ function Book(title, author, pages, read) {
 // Need to a write a function into the Book.prototype to change the read status.
 // Book.prototype.readStatus();
 
-// Don't know if there is anything else I need to do here to ensure the value and the clearing of the form are solid. To step it up another notch I have to add a button that pops up the form to submit a new book and then exists once the form is submitted. May have to research modal windows.
+// To step it up another notch I'd have to add a button that pops up the form to submit a new book and then exists once the form is submitted. May have to research modal windows.
 function saveInput() {
 
   if (!titleInput.checkValidity() || !authorInput.checkValidity() || !pagesInput.checkValidity() || !readInput.checkValidity()) {
@@ -61,13 +63,10 @@ submitButton.addEventListener("click", saveInput);
 
 function displayBooks(booksArray) {
   booksArray.forEach((element) => {
-    //create a new card
-      //create div with text fields for title, author, pages, and read
-      console.log(element)
 
       const bookCard = document.createElement('div')
+      bookCard.classList.add('display-item');
       booksDisplay.appendChild(bookCard);
-      //.classList.add(`booksArray[0]-booksArray.indexOf(element)`);
 
       const cardTitle = document.createElement('p');
       cardTitle.textContent = 'Title: ' + `${element.title}`;
@@ -77,23 +76,26 @@ function displayBooks(booksArray) {
       cardPages.textContent = 'Pages: ' + `${element.pages}`;
       const cardRead = document.createElement('p');
       cardRead.textContent = 'Read: ' +  `${element.read}`;
+      //read, not-read toggle
+      const readToggle = document.createElement('input');
+      readToggle.type = "checkbox";
+      //card remove button
+      const cardRemove = document.createElement('button');
+      cardRemove.classList.add('remove-button');
+      cardRemove.textContent = 'x';
 
-      bookCard.append(cardTitle, cardAuthor, cardPages, cardRead);
+      bookCard.append(cardTitle, cardAuthor, cardPages, cardRead, readToggle, cardRemove);
 
-      //did I use append right?
-
-      //append the new div to a grid with auto columns
-      //the styling will be preset in the CSS file
-
-      //add a button element to the card to remove the book from the library
       //add a buttom element to the card to change the books 'read' status
   })
 }
 
 function removeCard() {
-  //event listener to know if the button in the card was toggled
+  //event listener to know if the button in the card was clicked
   //if so, remove the card
   //will need to learn about data-attributes
+
+  //data-attribute = index of array
 }
 
 function updateReadStatus() {

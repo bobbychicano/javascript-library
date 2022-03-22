@@ -19,7 +19,7 @@ legend {
 
 form {
   width: 100%;
-  margin-top: 1rem;
+  margin: 1rem 0;
   display: flex;
   justify-content: center;
 }
@@ -50,7 +50,7 @@ label {
   justify-content: center;
 }
 
-button {
+.submit-button button {
   width: 6rem;
 }
 
@@ -69,4 +69,34 @@ input:focus:invalid {
   border: 1px solid black;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.display-item {
+  border: 3px solid #713f12;
+  border-radius: 10px;
+  padding: 1rem;
+  background-color: #fde68a;
+  font-weight: bold;
+  line-height: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.remove-button {
+  color: red;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-top: 1rem;
+  width: 2rem;
+}
+
+.display-item input {
+  margin-top: 0.5rem;
+}
+
+/* how can i properly target these? */
+.display-item input,
+.display-item button {
+  align-self: center;
 }
