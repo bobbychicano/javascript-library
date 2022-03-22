@@ -1,49 +1,49 @@
-const titleInput = document.querySelector('input#title');
-const authorInput = document.querySelector('input#author');
-const pagesInput = document.querySelector('input#pages');
-const readInput = document.querySelector('select#read');
-const submitButton = document.querySelector('.submit-button button');
+// There may be a way to shorten my code by using querySelectorAll
+const titleInput = document.querySelector('#title');
+const authorInput = document.querySelector('#author');
+const pagesInput = document.querySelector('#pages');
+const readInput = document.querySelector('#read');
+const submitButton = document.querySelector('button');
+const books = [];
 
-// there may be a way to shorten my code by using querySelectorAll
-
-let books = [];
-
-// when someon submits the form with the inputs that correspond the parameters below
-// the constructor needs to run in order to make a new Book object
+// Constructor
 function Book(title, author, pages, read) {
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.read = read;
-} // remember that this returns an object
+}
 
-//Book.prototype.readStatus();
+// Need to a write a function into the Book.prototype to change the read status.
+// Book.prototype.readStatus();
 
-// Submit button event listener
-submitButton.addEventListener("click", saveInput);
-
+// Don't know if there is anything else I need to do here to ensure the value and the clearing of the form are solid. To step it up another notch I have to add a button that pops up the form to submit a new book and then exists once the form is submitted. May have to research modal windows.
 function saveInput() {
   // 1. When a user clicks on the submit button, this function will run and save only valid input fields that have text.
   // 2. Then take the values in the input fields and save them to variables.
   // 3. Run the constructor function.
   // 4. Push the new book to the book array.
   // 5. Clear the input fields of text.
+  // Can I add a statement to check to make sure that input fields are not empty or does form validation handle that by itself?
 
   let bookTitle = titleInput.value;
   let bookAuthor = authorInput.value;
   let bookPages = pagesInput.value;
   let bookRead = readInput.value;
 
-  let newBook = Book(bookTitle, bookAuthor, bookPages, bookRead);
+  let newBook = new Book(bookTitle, bookAuthor, bookPages, bookRead);
 
   books.push(newBook);
+  console.log(books);
 
   titleInput.value = '';
   authorInput.value = '';
   pagesInput.value = '';
   readInput.value = '';
-
 }
+
+// Submit button event listener
+submitButton.addEventListener("click", saveInput);
 
 
 // function that loops through the array and displays each book on the homepage
@@ -85,5 +85,3 @@ function updateReadStatus() {
 
 // displaying each book in their own card would likely require grid-template-columns with repeat(autofit,
 // minmax())
-
-// Book.prototype.function = ""
