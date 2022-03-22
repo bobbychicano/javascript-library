@@ -26,6 +26,12 @@ function saveInput() {
   // 5. Clear the input fields of text.
   // Can I add a statement to check to make sure that input fields are not empty or does form validation handle that by itself?
 
+  if (!titleInput.checkValidity() || !authorInput.checkValidity() || !pagesInput.checkValidity() || !readInput.checkValidity()) {
+    alert('Invalid input detected. Please try again.');
+    return;
+  }
+  // Explore options for a more concise if statement instead of writing out each input field variable
+
   let bookTitle = titleInput.value;
   let bookAuthor = authorInput.value;
   let bookPages = pagesInput.value;

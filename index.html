@@ -11,7 +11,7 @@
   <div class="content-container">
     <h1>Book Library</h1>
     <p>Add information about the books you've read, or the books you'd like to read.</p>
-    <p>Fill out our form below to add it to your "Book Library".</p>
+    <p>Fill out the form below to add it to your "Book Library".</p>
 
     <div class="form-container">
       <form action="#" method="post">
@@ -27,11 +27,12 @@
           </div>
           <div class="form-item">
             <label for="pages">Pages:</label>
-            <input type="text" id="pages" name="pages" required>
+            <input type="number" id="pages" name="pages" required>
           </div>
           <div class="form-item">
             <label for="read">Have you read it?</label>
             <select name="read" id="read" required>
+              <option value="" disabled selected hidden>Make a selection</option>
               <option value="have-read">Have read</option>
               <option value="not-read">Not read</option>
             </select>
