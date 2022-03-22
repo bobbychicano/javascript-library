@@ -5,6 +5,14 @@ const pagesInput = document.querySelector('#pages');
 const readInput = document.querySelector('#read');
 const submitButton = document.querySelector('button');
 const books = [];
+const booksDisplay = document.querySelector('.books-display');
+
+// add some books to my array to help with styling
+
+let book1 = {title: 'East of Eden', author: 'John Steinbeck', pages: '521', read: 'have-read'};
+let book2 = {title: 'Silas Lapham', author: 'Howard', pages: '439', read: 'have-read'};
+books.push(book1, book2)
+displayBooks(books);
 
 // Constructor
 function Book(title, author, pages, read) {
@@ -19,12 +27,6 @@ function Book(title, author, pages, read) {
 
 // Don't know if there is anything else I need to do here to ensure the value and the clearing of the form are solid. To step it up another notch I have to add a button that pops up the form to submit a new book and then exists once the form is submitted. May have to research modal windows.
 function saveInput() {
-  // 1. When a user clicks on the submit button, this function will run and save only valid input fields that have text.
-  // 2. Then take the values in the input fields and save them to variables.
-  // 3. Run the constructor function.
-  // 4. Push the new book to the book array.
-  // 5. Clear the input fields of text.
-  // Can I add a statement to check to make sure that input fields are not empty or does form validation handle that by itself?
 
   if (!titleInput.checkValidity() || !authorInput.checkValidity() || !pagesInput.checkValidity() || !readInput.checkValidity()) {
     alert('Invalid input detected. Please try again.');
@@ -41,6 +43,7 @@ function saveInput() {
 
   books.push(newBook);
   console.log(books);
+  displayBooks(books);
 
   titleInput.value = '';
   authorInput.value = '';
@@ -50,25 +53,35 @@ function saveInput() {
 
 // Submit button event listener
 submitButton.addEventListener("click", saveInput);
+// Add another event listener here to show the book display?  Or just the function and then call that function after you push the newBook into the books array.
 
 
 // function that loops through the array and displays each book on the homepage
 // might I need to use a standard 'for' loop? the forEach() loop does NOT return a value
-// if i have a nodelist, convert it to an array first
-function displayArray(booksArray) {
+
+function displayBooks(booksArray) {
   booksArray.forEach((element) => {
     //create a new card
       //create div with text fields for title, author, pages, and read
-      const bookDiv = document.createElement('div').classList.add(`${element}`);
-      //can I give it a class or an ID? check if I gave it a class correctly
+      console.log(element)
 
-      //dealing with the first book object here
+      const bookCard = document.createElement('div')
+      booksDisplay.appendChild(bookCard);
+      //.classList.add(`booksArray[0]-booksArray.indexOf(element)`);
 
-      const bookTitle = document.createElement('p').classList.add(`${element}`);
-      bookTitle.textContent = `Title: ${element.title}`;
-      //Create new elements for author, pages, and read and then add text content.
+      const cardTitle = document.createElement('p');
+      cardTitle.textContent = 'Title: ' + `${element.title}`;
+      const cardAuthor = document.createElement('p');
+      cardAuthor.textContent = 'Author: ' +  `${element.author}`;
+      const cardPages = document.createElement('p');
+      cardPages.textContent = 'Pages: ' + `${element.pages}`;
+      const cardRead = document.createElement('p');
+      cardRead.textContent = 'Read: ' +  `${element.read}`;
 
-      //append all the new <p> elements to the new div
+      bookCard.append(cardTitle, cardAuthor, cardPages, cardRead);
+
+      //did I use append right?
+
       //append the new div to a grid with auto columns
       //the styling will be preset in the CSS file
 

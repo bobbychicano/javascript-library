@@ -64,3 +64,9 @@ input:focus:invalid {
   outline: none;
   border: 2px solid red;
 }
+
+.books-display {
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
