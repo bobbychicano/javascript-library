@@ -62,10 +62,18 @@ submitButton.addEventListener("click", saveInput);
 // might I need to use a standard 'for' loop? the forEach() loop does NOT return a value
 
 function displayBooks(booksArray) {
+
   booksArray.forEach((element) => {
 
+    //for each element in the array, check to see if it has been "drawn" (given a div element and children under that div element), and if it has, skip it, if it hasn't, then create a new div and append children elements with information about the element(object)
+
+    if (!!document.querySelector(`[data-card-number='${booksArray.indexOf(element)}']`)) {
+      return
+    } else {
+
       const bookCard = document.createElement('div')
-      bookCard.classList.add('display-item');
+      bookCard.setAttribute('id', 'display-item');
+      bookCard.setAttribute('data-card-number', `${booksArray.indexOf(element)}`);
       booksDisplay.appendChild(bookCard);
 
       const cardTitle = document.createElement('p');
@@ -76,17 +84,17 @@ function displayBooks(booksArray) {
       cardPages.textContent = 'Pages: ' + `${element.pages}`;
       const cardRead = document.createElement('p');
       cardRead.textContent = 'Read: ' +  `${element.read}`;
-      //read, not-read toggle
+      //the toggle for read, not-read
       const readToggle = document.createElement('input');
       readToggle.type = "checkbox";
       //card remove button
       const cardRemove = document.createElement('button');
       cardRemove.classList.add('remove-button');
-      cardRemove.textContent = 'x';
+      cardRemove.textContent = 'X';
 
       bookCard.append(cardTitle, cardAuthor, cardPages, cardRead, readToggle, cardRemove);
 
-      //add a buttom element to the card to change the books 'read' status
+    }
   })
 }
 
@@ -96,6 +104,7 @@ function removeCard() {
   //will need to learn about data-attributes
 
   //data-attribute = index of array
+  //when the remove button is clicked, it removes the actual object from the array therefore not even being able to display it
 }
 
 function updateReadStatus() {
@@ -106,3 +115,9 @@ function updateReadStatus() {
 
 // displaying each book in their own card would likely require grid-template-columns with repeat(autofit,
 // minmax())
+
+// now i need to select the toggle checkbox in the global scope so that I can attach an event listener to checkbox
+
+// const readToggle = document.querySelector();
+// readToggle.addEventListener('click', updateReadStatus);
+//is this supposed to be a click event or is there a more specific even for when a checkbox is clicked?
