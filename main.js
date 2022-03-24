@@ -55,22 +55,19 @@ function saveInput() {
 
 // Submit button event listener
 submitButton.addEventListener("click", saveInput);
-// Add another event listener here to show the book display?  Or just the function and then call that function after you push the newBook into the books array.
 
-
-// function that loops through the array and displays each book on the homepage
-// might I need to use a standard 'for' loop? the forEach() loop does NOT return a value
-
+// Display books function
 function displayBooks(booksArray) {
 
   booksArray.forEach((element) => {
 
-    //for each element in the array, check to see if it has been "drawn" (given a div element and children under that div element), and if it has, skip it, if it hasn't, then create a new div and append children elements with information about the element(object)
+    //for each element in the array, check to see if it has been "drawn" (given a div element and children under) already, and if it has, skip it, if it hasn't, then create a new div and append children elements with information about the element(object).
 
     if (!!document.querySelector(`[data-card-number='${booksArray.indexOf(element)}']`)) {
       return
     } else {
 
+//can I make the creation of all these elements a function in itself?
       const bookCard = document.createElement('div')
       bookCard.setAttribute('id', 'display-item');
       bookCard.setAttribute('data-card-number', `${booksArray.indexOf(element)}`);
@@ -85,8 +82,13 @@ function displayBooks(booksArray) {
       const cardRead = document.createElement('p');
       cardRead.textContent = 'Read: ' +  `${element.read}`;
       //the toggle for read, not-read
-      const readToggle = document.createElement('input');
-      readToggle.type = "checkbox";
+      const readToggle = document.createElement('label');
+        readToggle.classList.add('switch');
+      const toggleInput = document.createElement('input');
+        toggleInput.type = "checkbox";
+      const toggleSlider = document.createElement('span');
+        toggleSlider.classList.add('slider');
+      readToggle.append(toggleInput, toggleSlider);
       //card remove button
       const cardRemove = document.createElement('button');
       cardRemove.classList.add('remove-button');
@@ -98,14 +100,36 @@ function displayBooks(booksArray) {
   })
 }
 
-function removeCard() {
+let removeButton = document.querySelector('.remove-button');
+
+// need to target ALL remove buttons
+
+function removeCard(e) {
   //event listener to know if the button in the card was clicked
   //if so, remove the card
-  //will need to learn about data-attributes
+
+  console.log(e.target);
+
+//remove elements from array books
+// Find the index of the array element you want to remove using indexOf, and then remove that index with splice.
+
+//when it runs it needs to look at the data-card-number attribute and rreturnt the number and then plug that in to the splice method
+
+//this would refer to the global object (potential for using this method)
+
+// the function itself has to get the index of the array
+
+//do I need to use e.target so that it know where it was clicked?
+
+//books.splice(index, 1);
 
   //data-attribute = index of array
   //when the remove button is clicked, it removes the actual object from the array therefore not even being able to display it
+  //when the button is pressed it runs a function that exists inside the object prototype to delete it from the array?
+  //to delete its own data?
 }
+
+ removeButton.addEventListener('click', removeCard);
 
 function updateReadStatus() {
 
