@@ -1,10 +1,12 @@
+"use strict";
+
 // There may be a way to shorten my code by using querySelectorAll
 const titleInput = document.querySelector('#title');
 const authorInput = document.querySelector('#author');
 const pagesInput = document.querySelector('#pages');
 const readInput = document.querySelector('#read');
 const submitButton = document.querySelector('button');
-const books = [];
+let books = [];
 const booksDisplay = document.querySelector('.books-display');
 
 // Placeholder content: add some books to my array to help with styling
@@ -46,12 +48,16 @@ function saveInput() {
   books.push(newBook);
   console.log(books);
   displayBooks(books);
+// run another function, one that sets data-attributes?
+// target each available display card and give it a data-attribute
+//querySelectAll of them, loop through them, and give them a data-attribute and the value would start at 0 and climb up to 1 less of the books.length
+
+//then we would run this function again everytime the remove button is clicked to reassign index numbers to the card elements
 
   titleInput.value = '';
   authorInput.value = '';
   pagesInput.value = '';
   readInput.value = '';
-
 
 }
 
@@ -69,11 +75,11 @@ function displayBooks(booksArray) {
       return
     } else {
 
-//can I make the creation of all these elements a function in itself?
+      //can I make the creation of all these elements a function in itself?
       const bookCard = document.createElement('div')
       bookCard.setAttribute('id', 'display-item');
       bookCard.setAttribute('data-card-number', `${booksArray.indexOf(element)}`);
-      //bookCard.bookObject = element;
+      //can i make data attributes dynamic so that the number changes when the index number in the array changes? like when an element gets removed and all the element index numbers shift.
       booksDisplay.appendChild(bookCard);
 
       const cardTitle = document.createElement('p');
@@ -105,31 +111,15 @@ function displayBooks(booksArray) {
   })
 }
 
-/*
-function getRemoveButtons() {
-  // Target all of the remove buttons -- (returns a nodelist)
-  let removeButton = document.getElementsByClassName('remove-button');
-
-  // Assign all the removeButton nodes an event listener with the removeCard function
-  for (let i = 0; i < books.length; i++) {
-  removeButton[i].addEventListener('click', removeCard);
-  }
-
-  //how do we make it so that not more than one event listener is added?
-  //if the array element already has a click remove function, no need to add it again
-}
-
-*/
-
-
-
 // Function to remove a card from the books array, thereby removing it from the display
 function removeCard(e) {
 
   let cardNumber = e.target.parentElement.getAttribute('data-card-number');
   let deleteCard = document.querySelector(`[data-card-number='${cardNumber}']`);
 
-  // definitely feels like a hack but it gets my code to work and there isn't enough guidance on how to complete this project. It's great that I've had to struggle and learned a lot by it, but it's not sustainable to constantly have projects that stop progress dead in its tracks. I need a job and I need to finish this course so that I am at least familiar with things. Once I'm getting paid by the hour I wont mind having to spend time figuring something out. That's my one critique of TOP. Some of the projects need more guidance so that people can complete them in a timely manner and also pick up hints that developers only know becasue of years of experience. 
+  // books = books.filter(element => books.indexOf(element) != cardNumber);
+
+  // definitely feels like a hack but it gets my code to work and there isn't enough guidance on how to complete this project. It's great that I've had to struggle and learned a lot by it, but it's not sustainable to constantly have projects that stop progress dead in its tracks. I need a job and I need to finish this course so that I am at least familiar with things. Once I'm getting paid by the hour I wont mind having to spend time figuring something out. That's my one critique of TOP. Some of the projects need more guidance so that people can complete them in a timely manner and also pick up hints that developers only know becasue of years of experience.
   delete books[cardNumber];
 
   //books.splice(cardNumber, 1);
