@@ -28,7 +28,7 @@ fieldset {
   flex: 0 1 45%;
   display: flex;
   flex-direction: column;
-  height: min(45vh, 35vh);
+  height: min(45vh, 40vh);
   padding: 1rem 2rem;
 }
 
@@ -36,6 +36,11 @@ fieldset {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
+}
+
+.form-item input,
+.form-item select {
+  padding: 0.2rem;
 }
 
 label {
@@ -66,7 +71,6 @@ input:focus:invalid {
 }
 
 .books-display {
-  border: 1px solid black;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1rem;
@@ -145,5 +149,5 @@ input:focus:invalid {
 }
 
 .switch input:checked + .slider:before {
-  transform: translateX(calc(1.25rem - 2px));
+  transform: translateX(calc(1.25rem - 1px));
 }
