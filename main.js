@@ -7,8 +7,9 @@ const booksDisplay = document.querySelector('.books-display');
 
 let books = [];
 
-// Placeholder content: add some books to my array to help with styling
+submitButton.addEventListener("click", saveInput);
 
+// Placeholder content: add some books to my array to help with styling
 let book1 = {
   title: 'East of Eden',
   author: 'John Steinbeck',
@@ -24,7 +25,6 @@ let book2 = {
 
 books.push(book1, book2);
 displayBooks(books);
-
 // End of placeholder content
 
 // Book constructor
@@ -52,51 +52,21 @@ function clearFormFields() {
   readInput.value = '';
 }
 
-function saveInput() {
-
-  // Explore options for a more concise if statement instead of writing out each input field variable
-  if (!titleInput.checkValidity() || !authorInput.checkValidity() || !pagesInput.checkValidity() || !readInput.checkValidity()) {
-    alert('Invalid input detected. Please try again.');
-    return;
-  }
-
-  getFormFields();
-
-  //Destructuring assignment
-  let [bookTitle, bookAuthor, bookPages, bookRead] = getFormFields();
-
-  let newBook = new Book(bookTitle, bookAuthor, bookPages, bookRead);
-  books.push(newBook);
-
-  console.log(books);
-
-  displayBooks(books);
-  // (run another function, that targets each available display card and sets data-attributes?)
-
-  clearFormFields();
-
-}
-
-// Submit button event listener
-submitButton.addEventListener("click", saveInput);
-
-// Display books function
+// Function to display the book objects in the books array in divs called cards
 function displayBooks(booksArray) {
 
   booksArray.forEach((element) => {
 
-    //for each element in the array, check to see if it has been "drawn" (given a div element and children under) already, and if it has, skip it, if it hasn't, then create a new div and append children elements with information about the element(object).
+    // For each element in the array, check to see if it has been "drawn" (given a div element and children under it) already, and if it has, skip it, if it hasn't, then create a new div and append children elements with information about the element (book object).
 
     if (!!document.querySelector(`[data-card-number='${booksArray.indexOf(element)}']`)) {
       return
     } else {
 
-      //can I make the creation of all these elements a function in itself?
       const bookCard = document.createElement('div')
       bookCard.setAttribute('id', 'display-item');
       bookCard.setAttribute('data-card-number', `${booksArray.indexOf(element)}`);
-      //can i make data attributes dynamic so that the number changes when the index number in the array changes? like when an element gets removed and all the element index numbers shift.
-      booksDisplay.appendChild(bookCard);
+      //can i make data attributes dynamic so that the number changes when the index number in the array changes? like when an element gets removed and all the element index numbers shift?
 
       const cardTitle = document.createElement('p');
       cardTitle.textContent = 'Title: ' + `${element.title}`;
@@ -106,7 +76,8 @@ function displayBooks(booksArray) {
       cardPages.textContent = 'Pages: ' + `${element.pages}`;
       const cardRead = document.createElement('p');
       cardRead.textContent = 'Read: ' +  `${element.read}`;
-      //the toggle for read, not-read
+
+      // Create the toggle checkbox for 'read', 'not-read' status
       const readToggle = document.createElement('label');
         readToggle.classList.add('switch');
       const toggleInput = document.createElement('input');
@@ -114,31 +85,57 @@ function displayBooks(booksArray) {
         toggleInput.addEventListener('change', updateReadStatus);
       const toggleSlider = document.createElement('span');
         toggleSlider.classList.add('slider');
+
       readToggle.append(toggleInput, toggleSlider);
-      //card remove button
+
+      // Create the button to remove a card
       const cardRemove = document.createElement('button');
       cardRemove.classList.add('remove-button');
       cardRemove.textContent = 'X';
-      //testing if each button gets an event listener correctly
+
+      // Give each remove button an event listener
       cardRemove.addEventListener('click', removeCard);
 
       bookCard.append(cardTitle, cardAuthor, cardPages, cardRead, readToggle, cardRemove);
+
+      booksDisplay.appendChild(bookCard);
 
     }
   })
 }
 
-// Book.prototype.readStatus();
+function saveInput() {
+
+    // Explore options for a more concise if statement instead of writing out each input field variable
+  if (!titleInput.checkValidity() || !authorInput.checkValidity() || !pagesInput.checkValidity() || !readInput.checkValidity()) {
+    alert('Invalid input detected. Please try again.');
+    return;
+  }
+
+  getFormFields();
+
+  let [bookTitle, bookAuthor, bookPages, bookRead] = getFormFields();
+    //(Destructuring assignment)
+
+  let newBook = new Book(bookTitle, bookAuthor, bookPages, bookRead);
+  books.push(newBook);
+
+  console.log(books);
+
+  displayBooks(books);
+
+  clearFormFields();
+
+}
 
 // Function to remove a card from the books array, thereby removing it from the display
 function removeCard(e) {
 
   let cardNumber = e.target.parentElement.getAttribute('data-card-number');
-  let deleteCard = document.querySelector(`[data-card-number='${cardNumber}']`);
+  let deleteCard = document.querySelector(`[data-card-number='${card-number}']`);
 
   // books = books.filter(element => books.indexOf(element) != cardNumber);
 
-  // definitely feels like a hack but it gets my code to work and there isn't enough guidance on how to complete this project. It's great that I've had to struggle and learned a lot by it, but it's not sustainable to constantly have projects that stop progress dead in its tracks. I need a job and I need to finish this course so that I am at least familiar with things. Once I'm getting paid by the hour I wont mind having to spend time figuring something out. That's my one critique of TOP. Some of the projects need more guidance so that people can complete them in a timely manner and also pick up hints that developers only know becasue of years of experience.
   delete books[cardNumber];
 
   //books.splice(cardNumber, 1);
@@ -147,10 +144,10 @@ function removeCard(e) {
 
   deleteCard.remove();
 
-  // .splice isnt removing the last element for some reason
+  // .splice isnt removing the last element
 
-  //have to make a new book booksArray?
-  //everytime i remove an element from the array, the index numbers change
+  // Do I have to make a new book booksArray?
+  // Since everytime I remove an element from the array, the index numbers change
 }
 
 //Adding a method to toggle the read status on existing book cards
@@ -167,6 +164,8 @@ Object.prototype.toggle = function() {
   };
 };
 
+
+// Function to update the 'read' status
 function updateReadStatus(e) {
 
 let parent = e.target.closest('div').dataset.cardNumber;
@@ -177,10 +176,6 @@ console.log(`${parent}`);
 console.log(books[parent]);
 
 `${parent}`.toggle;
-
-
-
 // update the innerText to equal the new value in the corresponding object
-
 
 }
