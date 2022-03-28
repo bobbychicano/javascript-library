@@ -1,24 +1,33 @@
-"use strict";
-
-// There may be a way to shorten my code by using querySelectorAll
 const titleInput = document.querySelector('#title');
 const authorInput = document.querySelector('#author');
 const pagesInput = document.querySelector('#pages');
 const readInput = document.querySelector('#read');
 const submitButton = document.querySelector('button');
-let books = [];
 const booksDisplay = document.querySelector('.books-display');
+
+let books = [];
 
 // Placeholder content: add some books to my array to help with styling
 
-let book1 = {title: 'East of Eden', author: 'John Steinbeck', pages: '521', read: 'have-read'};
-let book2 = {title: 'Silas Lapham', author: 'Howard', pages: '439', read: 'have-read'};
-books.push(book1, book2)
+let book1 = {
+  title: 'East of Eden',
+  author: 'John Steinbeck',
+  pages: '521',
+  read: 'have-read'
+};
+let book2 = {
+  title: 'Silas Lapham',
+  author: 'William Dean Howells',
+  pages: '439',
+  read: 'have-read'
+};
+
+books.push(book1, book2);
 displayBooks(books);
 
-//end of placeholder content
+// End of placeholder content
 
-// Constructor
+// Book constructor
 function Book(title, author, pages, read) {
   this.title = title;
   this.author = author;
@@ -26,38 +35,45 @@ function Book(title, author, pages, read) {
   this.read = read;
 }
 
-// Need to a write a function into the Book.prototype to change the read status.
-// Book.prototype.readStatus();
-
-// To step it up another notch I'd have to add a button that pops up the form to submit a new book and then exists once the form is submitted. May have to research modal windows.
-function saveInput() {
-
-  if (!titleInput.checkValidity() || !authorInput.checkValidity() || !pagesInput.checkValidity() || !readInput.checkValidity()) {
-    alert('Invalid input detected. Please try again.');
-    return;
-  }
-  // Explore options for a more concise if statement instead of writing out each input field variable
-
+function getFormFields() {
   let bookTitle = titleInput.value;
   let bookAuthor = authorInput.value;
   let bookPages = pagesInput.value;
   let bookRead = readInput.value;
 
-  let newBook = new Book(bookTitle, bookAuthor, bookPages, bookRead);
+  //Have to return them as an array, cant return multiple values
+  return [bookTitle, bookAuthor, bookPages, bookRead];
+}
 
-  books.push(newBook);
-  console.log(books);
-  displayBooks(books);
-// run another function, one that sets data-attributes?
-// target each available display card and give it a data-attribute
-//querySelectAll of them, loop through them, and give them a data-attribute and the value would start at 0 and climb up to 1 less of the books.length
-
-//then we would run this function again everytime the remove button is clicked to reassign index numbers to the card elements
-
+function clearFormFields() {
   titleInput.value = '';
   authorInput.value = '';
   pagesInput.value = '';
   readInput.value = '';
+}
+
+function saveInput() {
+
+  // Explore options for a more concise if statement instead of writing out each input field variable
+  if (!titleInput.checkValidity() || !authorInput.checkValidity() || !pagesInput.checkValidity() || !readInput.checkValidity()) {
+    alert('Invalid input detected. Please try again.');
+    return;
+  }
+
+  getFormFields();
+
+  //Destructuring assignment
+  let [bookTitle, bookAuthor, bookPages, bookRead] = getFormFields();
+
+  let newBook = new Book(bookTitle, bookAuthor, bookPages, bookRead);
+  books.push(newBook);
+
+  console.log(books);
+
+  displayBooks(books);
+  // (run another function, that targets each available display card and sets data-attributes?)
+
+  clearFormFields();
 
 }
 
@@ -95,6 +111,7 @@ function displayBooks(booksArray) {
         readToggle.classList.add('switch');
       const toggleInput = document.createElement('input');
         toggleInput.type = "checkbox";
+        toggleInput.addEventListener('change', updateReadStatus);
       const toggleSlider = document.createElement('span');
         toggleSlider.classList.add('slider');
       readToggle.append(toggleInput, toggleSlider);
@@ -110,6 +127,8 @@ function displayBooks(booksArray) {
     }
   })
 }
+
+// Book.prototype.readStatus();
 
 // Function to remove a card from the books array, thereby removing it from the display
 function removeCard(e) {
@@ -134,17 +153,34 @@ function removeCard(e) {
   //everytime i remove an element from the array, the index numbers change
 }
 
-function updateReadStatus() {
+//Adding a method to toggle the read status on existing book cards
+Object.prototype.toggle = function() {
+
+  console.log("I work as a function, but my logic does not.");
+
+  if (this.read == "have-read") {
+    this.read = "not-read";
+    return
+  } else if (this.read == "not-read") {
+    this.read = "have-read";
+    return
+  };
+};
+
+function updateReadStatus(e) {
+
+let parent = e.target.closest('div').dataset.cardNumber;
+
+console.log(`${parent}`);
+//this is correctly returning the object
+
+console.log(books[parent]);
+
+`${parent}`.toggle;
+
+
+
+// update the innerText to equal the new value in the corresponding object
+
 
 }
-
-// is there a function i can input into the forEach code to create new elements?
-
-// displaying each book in their own card would likely require grid-template-columns with repeat(autofit,
-// minmax())
-
-// now i need to select the toggle checkbox in the global scope so that I can attach an event listener to checkbox
-
-// const readToggle = document.querySelector();
-// readToggle.addEventListener('click', updateReadStatus);
-//is this supposed to be a click event or is there a more specific even for when a checkbox is clicked?
