@@ -14,13 +14,15 @@ let book1 = {
   title: 'East of Eden',
   author: 'John Steinbeck',
   pages: '521',
-  read: 'have-read'
+  read: 'have-read',
+  "data-card-number": '0'
 };
 let book2 = {
   title: 'Silas Lapham',
   author: 'William Dean Howells',
   pages: '439',
-  read: 'have-read'
+  read: 'have-read',
+  "data-card-number": '1'
 };
 
 books.push(book1, book2);
@@ -59,14 +61,13 @@ function displayBooks(booksArray) {
 
     // For each element in the array, check to see if it has been "drawn" (given a div element and children under it) already, and if it has, skip it, if it hasn't, then create a new div and append children elements with information about the element (book object).
 
-    if (!!document.querySelector(`[data-card-number='${booksArray.indexOf(element)}']`)) {
+    if (!!document.querySelector(`[data-card-number='${element["data-card-number"]}']`)) {
       return
     } else {
 
       const bookCard = document.createElement('div')
       bookCard.setAttribute('id', 'display-item');
-      bookCard.setAttribute('data-card-number', `${booksArray.indexOf(element)}`);
-      //can i make data attributes dynamic so that the number changes when the index number in the array changes? like when an element gets removed and all the element index numbers shift?
+      bookCard.setAttribute('data-card-number', `${element["data-card-number"]}`);
 
       const cardTitle = document.createElement('p');
       cardTitle.textContent = 'Title: ' + `${element.title}`;
@@ -118,7 +119,9 @@ function saveInput() {
     //(Destructuring assignment)
 
   let newBook = new Book(bookTitle, bookAuthor, bookPages, bookRead);
+
   books.push(newBook);
+  newBook["data-card-number"] = books.indexOf(newBook);
 
   console.log(books);
 
@@ -132,22 +135,17 @@ function saveInput() {
 function removeCard(e) {
 
   let cardNumber = e.target.parentElement.getAttribute('data-card-number');
-  let deleteCard = document.querySelector(`[data-card-number='${card-number}']`);
+  let deleteCard = document.querySelector(`[data-card-number='${cardNumber}']`);
 
   // books = books.filter(element => books.indexOf(element) != cardNumber);
 
-  delete books[cardNumber];
+  //delete books[cardNumber];
 
-  //books.splice(cardNumber, 1);
+  books.splice(cardNumber, 1);
 
   console.log(books);
 
   deleteCard.remove();
-
-  // .splice isnt removing the last element
-
-  // Do I have to make a new book booksArray?
-  // Since everytime I remove an element from the array, the index numbers change
 }
 
 //Adding a method to toggle the read status on existing book cards
