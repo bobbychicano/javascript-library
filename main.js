@@ -47,7 +47,7 @@ function getFormFields() {
   let bookPages = pagesInput.value;
   let bookRead = readInput.value;
 
-  //Have to return them as an array, cant return multiple values
+  // Have to return them as an array, cant use 'return' to bring out multiple values
   return [bookTitle, bookAuthor, bookPages, bookRead];
 }
 
@@ -58,12 +58,10 @@ function clearFormFields() {
   readInput.value = '';
 }
 
-// Function to display the book objects in the books array in divs called cards
+// Function to display the book objects in the books array in <divs> called cards
 
 function displayBooks(booksArray) {
   booksArray.forEach((element) => {
-
-    // For each element in the array, check to see if it has been "drawn" (given a div element and children under it) already, and if it has, skip it, if it hasn't, then create a new div and append children elements with information about the element (book object).
 
     if (!!document.querySelector(`[data-card-number='${element["data-card-number"]}']`)) {
       return
@@ -72,7 +70,6 @@ function displayBooks(booksArray) {
       const bookCard = document.createElement('div')
       bookCard.setAttribute('id', 'display-item');
       bookCard.setAttribute('data-card-number', `${element["data-card-number"]}`);
-
 
       const cardTitle = document.createElement('p');
       cardTitle.textContent = 'Title: ' + `${element.title}`;
@@ -138,7 +135,7 @@ function saveInput() {
 
 }
 
-// Function to remove a card from the books array, thereby removing it from the display
+// Function to remove a card from the books array and the div from the DOM
 function removeCard(e) {
 
   let cardNumber = e.target.parentElement.getAttribute('data-card-number');
@@ -148,43 +145,37 @@ function removeCard(e) {
 
   books = books.filter(element => element["data-card-number"] != cardNumber);
 
-  //books = books.filter(element => books.indexOf(element) != cardNumber);
-
-  //delete books[cardNumber];
-
-  //books.splice(cardNumber, 1);
-
   console.log(books);
 
   deleteCard.remove();
 }
 
-//Adding a method to toggle the read status on existing book cards
-Object.prototype.toggle = function() {
+//Adding a method to the Book constructor prototype to toggle the read status on existing book cards
+Book.prototype.toggle = function() {
 
   console.log("I work as a function, but my logic does not.");
 
   if (this.read == "have-read") {
     this.read = "not-read";
-    return
+
   } else if (this.read == "not-read") {
     this.read = "have-read";
-    return
+
   };
 };
-
 
 // Function to update the 'read' status
 function updateReadStatus(e) {
 
 let parent = e.target.closest('div').dataset.cardNumber;
+console.log(parent);
 
-console.log(`${parent}`);
 //this is correctly returning the object
-
 console.log(books[parent]);
 
 `${parent}`.toggle;
+
+
 // update the innerText to equal the new value in the corresponding object
 
 }
