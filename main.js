@@ -4,36 +4,12 @@ const pagesInput = document.querySelector('#pages');
 const readInput = document.querySelector('#read');
 const submitButton = document.querySelector('button');
 const booksDisplay = document.querySelector('.books-display');
+const books = [];
 
-let books = [];
-
-let i = 2;
+let i = 0;
 
 submitButton.addEventListener("click", saveInput);
 
-
-// Placeholder content: add some books to my array to help with styling
-let book1 = {
-  title: 'East of Eden',
-  author: 'John Steinbeck',
-  pages: '521',
-  read: 'have-read',
-  "data-card-number": '0'
-};
-let book2 = {
-  title: 'Silas Lapham',
-  author: 'William Dean Howells',
-  pages: '439',
-  read: 'have-read',
-  "data-card-number": '1'
-};
-
-books.push(book1, book2);
-displayBooks(books);
-// End of placeholder content
-
-
-// Book constructor
 function Book(title, author, pages, read) {
   this.title = title;
   this.author = author;
@@ -41,15 +17,12 @@ function Book(title, author, pages, read) {
   this.read = read;
 }
 
-Book.prototype.testProp = "I'm testing if their is prototypal inheritance";
-
 function getFormFields() {
   let bookTitle = titleInput.value;
   let bookAuthor = authorInput.value;
   let bookPages = pagesInput.value;
   let bookRead = readInput.value;
 
-  // Have to return them as an array, cant use 'return' to bring out multiple values
   return [bookTitle, bookAuthor, bookPages, bookRead];
 }
 
@@ -59,8 +32,6 @@ function clearFormFields() {
   pagesInput.value = '';
   readInput.value = '';
 }
-
-// Function to display the book objects in the books array in <divs> called cards
 
 function displayBooks(booksArray) {
   booksArray.forEach((element) => {
@@ -82,7 +53,6 @@ function displayBooks(booksArray) {
       const cardRead = document.createElement('p');
       cardRead.textContent = 'Read: ' +  `${element.read}`;
 
-      // Create the toggle checkbox for 'read', 'not-read' status
       const readToggle = document.createElement('label');
         readToggle.classList.add('switch');
       const toggleInput = document.createElement('input');
@@ -93,12 +63,10 @@ function displayBooks(booksArray) {
 
       readToggle.append(toggleInput, toggleSlider);
 
-      // Create the button to remove a card
       const cardRemove = document.createElement('button');
       cardRemove.classList.add('remove-button');
       cardRemove.textContent = 'X';
 
-      // Give each remove button an event listener
       cardRemove.addEventListener('click', removeCard);
 
       bookCard.append(cardTitle, cardAuthor, cardPages, cardRead, readToggle, cardRemove);
@@ -111,7 +79,6 @@ function displayBooks(booksArray) {
 
 function saveInput() {
 
-    // Explore options for a more concise if statement instead of writing out each input field variable
   if (!titleInput.checkValidity() || !authorInput.checkValidity() || !pagesInput.checkValidity() || !readInput.checkValidity()) {
     alert('Invalid input detected. Please try again.');
     return;
@@ -120,7 +87,6 @@ function saveInput() {
   getFormFields();
 
   let [bookTitle, bookAuthor, bookPages, bookRead] = getFormFields();
-    //(Destructuring assignment)
 
   let newBook = new Book(bookTitle, bookAuthor, bookPages, bookRead);
 
@@ -129,15 +95,13 @@ function saveInput() {
   newBook["data-card-number"] = i;
   i++;
 
-  console.log(books);
-
   displayBooks(books);
 
   clearFormFields();
 
 }
 
-// Function to remove a card from the books array and the div from the DOM
+
 function removeCard(e) {
 
   let cardNumber = e.target.parentElement.getAttribute('data-card-number');
@@ -147,50 +111,31 @@ function removeCard(e) {
 
   books = books.filter(element => element["data-card-number"] != cardNumber);
 
-  console.log(books);
-
   deleteCard.remove();
 }
 
-//Adding a method to the Book constructor prototype to toggle the read status on existing book cards
-Book.prototype.toggle = function() {
+Book.prototype.toggleRead = function() {
 
   console.log("I work as a function, but my logic does not.");
 
   if (this.read == "have-read") {
     this.read = "not-read";
-
   } else if (this.read == "not-read") {
     this.read = "have-read";
-
   };
 };
 
-
-
-// Function to update the 'read' status
 function updateReadStatus(e) {
 
 let readStatus = e.target.closest('div').querySelector(':nth-child(4)');
-console.log(readStatus);
 
 let parentNumber = e.target.closest('div').dataset.cardNumber;
-console.log(parentNumber);
 
-let found = books.find( element => element["data-card-number"] == parentNumber);
+let findBook = books.find( element => element["data-card-number"] == parentNumber);
 
-let gotcha = books.indexOf(found);
-console.log(gotcha);
+let bookIndex = books.indexOf(findBook);
 
-// Now I need to run my method for updating the read status inside my object
-console.log(books[gotcha].title); //this works to get the title so I am targeting my object correctly
+books[bookIndex].toggleRead();
 
-//this is working so my code is right. however, the issue is that my book objects and the Book constructor methods are not linked correctly.
-if (books[gotcha].read == "have-read") {
-  books[gotcha].read = "not-read";
-} else if (books[gotcha].read == "not-read") {
-  books[gotcha].read = "have-read";
-}
-
-readStatus.innerText = "Read: " + books[gotcha].read;
+readStatus.innerText = "Read: " + books[bookIndex].read;
 }
