@@ -171,25 +171,19 @@ Book.prototype.toggle = function() {
 // Function to update the 'read' status
 function updateReadStatus(e) {
 
-// Selects the 4th paragraph element in the book display div to allow me to change the text content
 let readStatus = e.target.closest('div').querySelector(':nth-child(4)');
 console.log(readStatus);
 
-// Gets the data-card-number of the div linked to the object with the same value for its property
 let parentNumber = e.target.closest('div').dataset.cardNumber;
 console.log(parentNumber);
 
-// This finds the actual array element vs the DOM element and returns it
 let found = books.find( element => element["data-card-number"] == parentNumber);
 
-// This returns the index # of the array element corresponding to the div where the button was toggled
 let gotcha = books.indexOf(found);
 console.log(gotcha);
 
 // Now I need to run my method for updating the read status inside my object
 console.log(books[gotcha].title); //this works to get the title so I am targeting my object correctly
-
-//console.log(books[gotcha]["testProp"]);
 
 //this is working so my code is right. however, the issue is that my book objects and the Book constructor methods are not linked correctly.
 if (books[gotcha].read == "have-read") {
