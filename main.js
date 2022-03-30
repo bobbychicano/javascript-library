@@ -167,15 +167,37 @@ Book.prototype.toggle = function() {
 // Function to update the 'read' status
 function updateReadStatus(e) {
 
-let parent = e.target.closest('div').dataset.cardNumber;
-console.log(parent);
+  //forget the data-card-number
+  //get the indexOf because it will always be in the correct index order right?
 
-//this is correctly returning the object
-console.log(books[parent]);
+// Selects the 4th paragraph element in the book display card to allow me to change the text content
+let readStatus = e.target.closest('div').querySelector(':nth-child(4)');
+console.log(readStatus);
 
-`${parent}`.toggle;
+let parentNumber = e.target.closest('div').dataset.cardNumber;
+console.log(parentNumber);
+
+let found = books.find( element => element["data-card-number"] == parentNumber);
+//this finds the actual array element vs the DOM element
+
+let gotcha = books.indexOf(found);
+//this returns the index # of the array element corresponding to the div where the button was toggled
+
+console.log(gotcha);
 
 
-// update the innerText to equal the new value in the corresponding object
+// Now here is where I have to ensure my prototype method is working correctly.
+books.gotcha.toggle();
+
+
+//books[object X]
+// readStatus.innerText = the data inside the object
+
+//I'm trying to locate a specific array element using a data-attribute value
+
+//now that i have the parent's data-attribute number how can I target the array and make a change?
+//I first need to target the array element to then change the objects property (key-value pair)
+
+// .toggle();
 
 }
