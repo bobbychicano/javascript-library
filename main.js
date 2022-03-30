@@ -41,6 +41,8 @@ function Book(title, author, pages, read) {
   this.read = read;
 }
 
+Book.prototype.testProp = "I'm testing if their is prototypal inheritance";
+
 function getFormFields() {
   let bookTitle = titleInput.value;
   let bookAuthor = authorInput.value;
@@ -164,40 +166,37 @@ Book.prototype.toggle = function() {
   };
 };
 
+
+
 // Function to update the 'read' status
 function updateReadStatus(e) {
 
-  //forget the data-card-number
-  //get the indexOf because it will always be in the correct index order right?
-
-// Selects the 4th paragraph element in the book display card to allow me to change the text content
+// Selects the 4th paragraph element in the book display div to allow me to change the text content
 let readStatus = e.target.closest('div').querySelector(':nth-child(4)');
 console.log(readStatus);
 
+// Gets the data-card-number of the div linked to the object with the same value for its property
 let parentNumber = e.target.closest('div').dataset.cardNumber;
 console.log(parentNumber);
 
+// This finds the actual array element vs the DOM element and returns it
 let found = books.find( element => element["data-card-number"] == parentNumber);
-//this finds the actual array element vs the DOM element
 
+// This returns the index # of the array element corresponding to the div where the button was toggled
 let gotcha = books.indexOf(found);
-//this returns the index # of the array element corresponding to the div where the button was toggled
-
 console.log(gotcha);
 
+// Now I need to run my method for updating the read status inside my object
+console.log(books[gotcha].title); //this works to get the title so I am targeting my object correctly
 
-// Now here is where I have to ensure my prototype method is working correctly.
-books.gotcha.toggle();
+//console.log(books[gotcha]["testProp"]);
 
+//this is working so my code is right. however, the issue is that my book objects and the Book constructor methods are not linked correctly.
+if (books[gotcha].read == "have-read") {
+  books[gotcha].read = "not-read";
+} else if (books[gotcha].read == "not-read") {
+  books[gotcha].read = "have-read";
+}
 
-//books[object X]
-// readStatus.innerText = the data inside the object
-
-//I'm trying to locate a specific array element using a data-attribute value
-
-//now that i have the parent's data-attribute number how can I target the array and make a change?
-//I first need to target the array element to then change the objects property (key-value pair)
-
-// .toggle();
-
+readStatus.innerText = "Read: " + books[gotcha].read;
 }
