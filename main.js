@@ -1,15 +1,18 @@
-const titleInput = document.querySelector('#title');
-const authorInput = document.querySelector('#author');
-const pagesInput = document.querySelector('#pages');
-const readInput = document.querySelector('#read');
+const titleInput = document.getElementById('title');
+const authorInput = document.getElementById('author');
+const pagesInput = document.getElementById('pages');
+const readInput = document.getElementById('read');
 const submitButton = document.querySelector('button');
 const booksDisplay = document.querySelector('.books-display');
-const books = [];
+let books = [];
 
+// Initializer
 let i = 0;
 
+// The 'submit' button event listener
 submitButton.addEventListener("click", saveInput);
 
+// Factory function to create books
 function Book(title, author, pages, read) {
   this.title = title;
   this.author = author;
@@ -17,6 +20,7 @@ function Book(title, author, pages, read) {
   this.read = read;
 }
 
+// Function to save the the value of the inputs in the "Add A Book" form
 function getFormFields() {
   let bookTitle = titleInput.value;
   let bookAuthor = authorInput.value;
@@ -26,6 +30,7 @@ function getFormFields() {
   return [bookTitle, bookAuthor, bookPages, bookRead];
 }
 
+// Function to clear the form input fields
 function clearFormFields() {
   titleInput.value = '';
   authorInput.value = '';
@@ -33,25 +38,27 @@ function clearFormFields() {
   readInput.value = '';
 }
 
+// Function to display a book on screen after it has been submitted
 function displayBooks(booksArray) {
   booksArray.forEach((element) => {
 
-    if (!!document.querySelector(`[data-card-number='${element["data-card-number"]}']`)) {
-      return
+    // If it is possible to target an element with an attribute of 'data-card-number' that equals the
+    // array element's data-card-number value, then execute the following code
+    if (document.querySelector(`[data-card-number="${element["data-card-number"]}"]`)) {
+      return;
     } else {
+      const bookDisplayCard = document.createElement('div');
+      bookDisplayCard.setAttribute('id', 'display-item');
+      bookDisplayCard.setAttribute('data-card-number', `${element["data-card-number"]}`);
 
-      const bookCard = document.createElement('div')
-      bookCard.setAttribute('id', 'display-item');
-      bookCard.setAttribute('data-card-number', `${element["data-card-number"]}`);
-
-      const cardTitle = document.createElement('p');
-      cardTitle.textContent = 'Title: ' + `${element.title}`;
-      const cardAuthor = document.createElement('p');
-      cardAuthor.textContent = 'Author: ' +  `${element.author}`;
-      const cardPages = document.createElement('p');
-      cardPages.textContent = 'Pages: ' + `${element.pages}`;
-      const cardRead = document.createElement('p');
-      cardRead.textContent = 'Read: ' +  `${element.read}`;
+      const displayCardTitle = document.createElement('p');
+      displayCardTitle.textContent = 'Title: ' + `${element.title}`;
+      const displayCardAuthor = document.createElement('p');
+      displayCardAuthor.textContent = 'Author: ' +  `${element.author}`;
+      const displayCardPages = document.createElement('p');
+      displayCardPages.textContent = 'Pages: ' + `${element.pages}`;
+      const displayCardRead = document.createElement('p');
+      displayCardRead.textContent = 'Read: ' +  `${element.read}`;
 
       const readToggle = document.createElement('label');
         readToggle.classList.add('switch');
@@ -63,22 +70,21 @@ function displayBooks(booksArray) {
 
       readToggle.append(toggleInput, toggleSlider);
 
-      const cardRemove = document.createElement('button');
-      cardRemove.classList.add('remove-button');
-      cardRemove.textContent = 'X';
+      const removeCardButton = document.createElement('button');
+      removeCardButton.classList.add('remove-button');
+      removeCardButton.textContent = 'X';
 
-      cardRemove.addEventListener('click', removeCard);
+      removeCardButton.addEventListener('click', removeCard);
 
-      bookCard.append(cardTitle, cardAuthor, cardPages, cardRead, readToggle, cardRemove);
+      bookDisplayCard.append(displayCardTitle, displayCardAuthor, displayCardPages, displayCardRead, readToggle, removeCardButton);
 
-      booksDisplay.appendChild(bookCard);
-
+      booksDisplay.append(bookDisplayCard);
     }
   });
 }
 
+// Function to save book data when it is submitted
 function saveInput() {
-
   if (!titleInput.checkValidity() || !authorInput.checkValidity() || !pagesInput.checkValidity() || !readInput.checkValidity()) {
     alert('Invalid input detected. Please try again.');
     return;
@@ -87,52 +93,43 @@ function saveInput() {
   getFormFields();
 
   let [bookTitle, bookAuthor, bookPages, bookRead] = getFormFields();
-
-  let newBook = new Book(bookTitle, bookAuthor, bookPages, bookRead);
-
-  books.push(newBook);
-
-  newBook["data-card-number"] = i;
+  let newLibraryBook = new Book(bookTitle, bookAuthor, bookPages, bookRead);
+  newLibraryBook["data-card-number"] = i;
   i++;
 
+  books.push(newLibraryBook);
+
   displayBooks(books);
-
   clearFormFields();
-
 }
 
-
+// Function to remove a book card from the display on-screen
 function removeCard(e) {
-
   let cardNumber = e.target.parentElement.getAttribute('data-card-number');
-  console.log(cardNumber);
-
   let deleteCard = document.querySelector(`[data-card-number='${cardNumber}']`);
 
+  // updates the books array with the result of the new array from filtering out the array element that
+  // we want removed
   books = books.filter(element => element["data-card-number"] != cardNumber);
 
   deleteCard.remove();
 }
 
+// Book prototype method to be able to toggle the read status
 Book.prototype.toggleRead = function() {
-
-  console.log("I work as a function, but my logic does not.");
-
   if (this.read == "have-read") {
     this.read = "not-read";
   } else if (this.read == "not-read") {
     this.read = "have-read";
-  };
+  }
 };
 
+// Function to update the 'read' status
 function updateReadStatus(e) {
 
 let readStatus = e.target.closest('div').querySelector(':nth-child(4)');
-
 let parentNumber = e.target.closest('div').dataset.cardNumber;
-
 let findBook = books.find( element => element["data-card-number"] == parentNumber);
-
 let bookIndex = books.indexOf(findBook);
 
 books[bookIndex].toggleRead();
