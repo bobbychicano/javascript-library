@@ -6,6 +6,4 @@ This project took me an entire week and a half of coding. There were so many roa
 
 There was tons of googling involved, re-reading of the material, and even one instance of asking for help in the TOP discord. I'm proud to say that it is all original code; it is all my logic and my way of viewing programming right there in that main.js file (the HTML and CSS were fairly simple and took me no time at all to complete).
 
-It feels good completing a project of this sort, but man I really feel there should be more guidance for these. Some of us need to keep moving along with the curriculum because our lives depend on it. I don't have all the time in the world to struggle through every little problem. I can confidently say that I learned a lot from having to struggle, but in the end, the struggle outweighed the amount learned and the progress made. I think there is a way to rewrite the lesson so that people still struggle and learn, but do so more efficiently.
-
 For now, I put this project behind me and can finally look forward and move onward. I am excited to learn more and I am anxious to get employed. I can easily see myself finding constant reward in solving the puzzles involved in coding as a professional developer.
