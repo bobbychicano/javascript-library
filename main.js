@@ -12,12 +12,23 @@ let i = 0;
 // The 'submit' button event listener
 submitButton.addEventListener("click", saveInput);
 
-// Factory function to create books
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
+// Class declaration for Book
+class Book {
+  constructor(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+  }
+
+  // Class method to update the read readStatus
+  toggleRead() {
+    if (this.read == "have-read") {
+      this.read = "not-read";
+    } else if (this.read == "not-read") {
+      this.read = "have-read";
+    }
+  }
 }
 
 // Function to save the the value of the inputs in the "Add A Book" form
@@ -114,15 +125,6 @@ function removeCard(e) {
 
   deleteCard.remove();
 }
-
-// Book prototype method to be able to toggle the read status
-Book.prototype.toggleRead = function() {
-  if (this.read == "have-read") {
-    this.read = "not-read";
-  } else if (this.read == "not-read") {
-    this.read = "have-read";
-  }
-};
 
 // Function to update the 'read' status
 function updateReadStatus(e) {
